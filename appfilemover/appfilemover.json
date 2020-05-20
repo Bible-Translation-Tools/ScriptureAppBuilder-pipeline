@@ -1,0 +1,291 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Append_to_string_variable": {
+                "inputs": {
+                    "name": "applink",
+                    "value": "@body('Parse_JSON')?['appName']"
+                },
+                "runAfter": {
+                    "Initialize_variable": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "AppendToStringVariable"
+            },
+            "Append_to_string_variable_2": {
+                "inputs": {
+                    "name": "applink",
+                    "value": "-1.0.apk?sv=2019-02-02&ss=f&srt=sco&sp=rl&se=2021-04-22T01:33:35Z&st=2020-04-21T17:33:35Z&spr=https&sig=XGCF6Ix%2BkOuT8d%2B00IJQKYHx8KO%2Fe%2Bdiq2qJDO9TaA8%3D"
+                },
+                "runAfter": {
+                    "Append_to_string_variable": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "AppendToStringVariable"
+            },
+            "Condition": {
+                "actions": {
+                    "Send_Text_Message_(SMS)": {
+                        "inputs": {
+                            "body": {
+                                "body": "@variables('applink')",
+                                "from": "+13213402515",
+                                "to": "@{decodeUriComponent(body('Parse_JSON')?['InputPhone'])}"
+                            },
+                            "host": {
+                                "connection": {
+                                    "name": "@parameters('$connections')['twilio_1']['connectionId']"
+                                }
+                            },
+                            "method": "post",
+                            "path": "/Messages.json"
+                        },
+                        "runAfter": {},
+                        "type": "ApiConnection"
+                    }
+                },
+                "else": {
+                    "actions": {
+                        "Send_Text_Message_(SMS)_2": {
+                            "inputs": {
+                                "body": {
+                                    "body": "We're sorry, your app build failed.",
+                                    "from": "+13213402515",
+                                    "to": "@{decodeUriComponent(body('Parse_JSON')?['InputPhone'])}"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['twilio_1']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/Messages.json"
+                            },
+                            "runAfter": {},
+                            "type": "ApiConnection"
+                        }
+                    }
+                },
+                "expression": {
+                    "and": [
+                        {
+                            "equals": [
+                                "@variables('varcontainerstate')",
+                                "Succeeded"
+                            ]
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Delete_a_container_group": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "If"
+            },
+            "Delete_a_container_group": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['aci']['connectionId']"
+                        }
+                    },
+                    "method": "delete",
+                    "path": "/subscriptions/@{encodeURIComponent('ac699e06-0cc4-408d-9b96-e104386e68a3')}/resourceGroups/@{encodeURIComponent('dansfunctions')}/providers/Microsoft.ContainerInstance/containerGroups/@{encodeURIComponent(body('Parse_JSON')?['JobID'])}",
+                    "queries": {
+                        "x-ms-api-version": "2019-12-01"
+                    }
+                },
+                "runAfter": {
+                    "Delete_message": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            },
+            "Delete_message": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azurequeues']['connectionId']"
+                        }
+                    },
+                    "method": "delete",
+                    "path": "/@{encodeURIComponent('appbuildermonitorqueue')}/messages/@{encodeURIComponent(triggerBody()?['MessageId'])}",
+                    "queries": {
+                        "popreceipt": "@triggerBody()?['PopReceipt']"
+                    }
+                },
+                "runAfter": {
+                    "Until": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            },
+            "Initialize_variable": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "applink",
+                            "type": "string",
+                            "value": "https://scriptureappstorage.file.core.windows.net/acishare/"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_variable_2": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "varcontainerstate",
+                            "type": "string",
+                            "value": "unknown"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Append_to_string_variable_2": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Parse_JSON": {
+                "inputs": {
+                    "content": "@triggerBody()?['MessageText']",
+                    "schema": {
+                        "properties": {
+                            "InputPhone": {
+                                "type": "string"
+                            },
+                            "JobID": {
+                                "type": "string"
+                            },
+                            "appName": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {},
+                "type": "ParseJson"
+            },
+            "Until": {
+                "actions": {
+                    "Delay": {
+                        "inputs": {
+                            "interval": {
+                                "count": 1,
+                                "unit": "Minute"
+                            }
+                        },
+                        "runAfter": {
+                            "Get_properties_of_a_container_group_2": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Wait"
+                    },
+                    "Get_properties_of_a_container_group_2": {
+                        "inputs": {
+                            "host": {
+                                "connection": {
+                                    "name": "@parameters('$connections')['aci']['connectionId']"
+                                }
+                            },
+                            "method": "get",
+                            "path": "/subscriptions/@{encodeURIComponent('ac699e06-0cc4-408d-9b96-e104386e68a3')}/resourceGroups/@{encodeURIComponent('dansfunctions')}/providers/Microsoft.ContainerInstance/containerGroups/@{encodeURIComponent(body('Parse_JSON')?['JobID'])}",
+                            "queries": {
+                                "x-ms-api-version": "2019-12-01"
+                            }
+                        },
+                        "runAfter": {},
+                        "type": "ApiConnection"
+                    },
+                    "Set_variable": {
+                        "inputs": {
+                            "name": "varcontainerstate",
+                            "value": "@body('Get_properties_of_a_container_group_2')?['properties']?['instanceView']?['state']"
+                        },
+                        "runAfter": {
+                            "Delay": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "SetVariable"
+                    }
+                },
+                "expression": "@or(equals(variables('varcontainerstate'), 'Succeeded'), equals(variables('varcontainerstate'), 'Failed'))",
+                "limit": {
+                    "count": 60,
+                    "timeout": "PT1H"
+                },
+                "runAfter": {
+                    "Initialize_variable_2": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Until"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "When_there_are_messages_in_a_queue": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azurequeues']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/@{encodeURIComponent('appbuildermonitorqueue')}/message_trigger"
+                },
+                "recurrence": {
+                    "frequency": "Minute",
+                    "interval": 10
+                },
+                "splitOn": "@triggerBody()?['QueueMessagesList']?['QueueMessage']",
+                "type": "ApiConnection"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "aci": {
+                    "connectionId": "/subscriptions/ac699e06-0cc4-408d-9b96-e104386e68a3/resourceGroups/dansfunctions/providers/Microsoft.Web/connections/aci",
+                    "connectionName": "aci",
+                    "id": "/subscriptions/ac699e06-0cc4-408d-9b96-e104386e68a3/providers/Microsoft.Web/locations/eastus/managedApis/aci"
+                },
+                "azurequeues": {
+                    "connectionId": "/subscriptions/ac699e06-0cc4-408d-9b96-e104386e68a3/resourceGroups/dansfunctions/providers/Microsoft.Web/connections/azurequeues",
+                    "connectionName": "azurequeues",
+                    "id": "/subscriptions/ac699e06-0cc4-408d-9b96-e104386e68a3/providers/Microsoft.Web/locations/eastus/managedApis/azurequeues"
+                },
+                "twilio_1": {
+                    "connectionId": "/subscriptions/ac699e06-0cc4-408d-9b96-e104386e68a3/resourceGroups/dansfunctions/providers/Microsoft.Web/connections/twilio-1",
+                    "connectionName": "twilio-1",
+                    "id": "/subscriptions/ac699e06-0cc4-408d-9b96-e104386e68a3/providers/Microsoft.Web/locations/eastus/managedApis/twilio"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,34 @@
+﻿{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "queue",
+      "name": "outputQueueBuilderItem",
+      "queueName": "appbuilderqueue",
+      "connection": "AzureWebJobsStorage",
+      "direction": "out"
+    },
+    {
+      "type": "queue",
+      "name": "outputQueueMonitorItem",
+      "queueName": "appbuildermonitorqueue",
+      "connection": "AzureWebJobsStorage",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}

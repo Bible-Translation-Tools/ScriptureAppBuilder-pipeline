@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <!-- Build Environment -->
+  <build>
+    <gradle offline="false"/>
+    <folder name="jdk">/usr/lib/jvm/java-8-openjdk-amd64</folder>
+    <folder name="android.sdk">/opt/android-sdk-linux</folder>
+    <folder name="app.builder">/usr/share/scripture-app-builder</folder>
+    <folder name="gradle.cache"></folder>
+    <folder name="apk.output">/root/App Builder/Scripture Apps/Apk Output</folder>
+    <folder name="ipa.output">/root/App Builder/Scripture Apps/Ipa Output</folder>
+    <folder name="sim.output">/root/App Builder/Scripture Apps/Sim Output</folder>
+    <folder name="epub.output">/root/App Builder/Scripture Apps/Epub Output</folder>
+    <folder name="html.output">/root/App Builder/Scripture Apps/HTML Output</folder>
+    <folder name="build">/root/App Builder/Scripture Apps/build</folder>
+    <folder name="mappings"></folder>
+
+    <features type="build">
+      <feature name="after-build-install" value="false" />
+      <feature name="after-build-run" value="false" />
+      <feature name="after-build-close-window" value="false" />
+    </features>
+  </build>
+
+  <!-- Default Folders -->
+  <default-folders>
+    <folder name="app.def">/root/App Builder/Scripture Apps/App Projects</folder>
+    <folder name="keystore">/root/App Builder/keystore</folder>
+    <folder name="keyman"></folder>
+    <folder name="provisioning-profile"></folder>
+    <folder name="downloads">/root/downloads</folder>
+    <folder name="analytics"></folder>
+    <folder name="audio"></folder>
+    <folder name="audio-timing"></folder>
+    <folder name="books">/root/downloads</folder>
+    <folder name="book-collections"></folder>
+    <folder name="contents"></folder>
+    <folder name="fonts"></folder>
+    <folder name="images"></folder>
+    <folder name="aeneas"></folder>
+    <folder name="espeak"></folder>
+    <folder name="libreoffice"></folder>
+    <folder name="slideshows"></folder>
+    <folder name="verses"></folder>
+  </default-folders>
+
+  <!-- Defaults -->
+  <package-name></package-name>
+
+  <!-- Screen Position -->
+  <screen-position width="800" height="550" x="560" y="245" />
+
+  <!-- File Include -->
+  <file-include type="audio" mode="link" />
+
+  <!-- User Interface Language -->
+  <language value="en"/>
+
+  <!-- Open App Definitions -->
+  <apps>
+    <app>
+      <name>testapp43</name>
+      <filename>/root/App Builder/Scripture Apps/App Projects/testapp43/testapp43.appDef</filename>
+    </app>
+  </apps>
+
+  <!-- Preferences -->
+  <preferences>
+    <preference name="left-pane-width">220</preference>
+  </preferences>
+
+</settings>

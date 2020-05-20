@@ -1,0 +1,12 @@
+<b>%app-name%</b>
+
+<b>Text</b>
+© Wycliffe Associates
+
+<b>Audio</b>
+none
+
+<b>Illustrations</b>
+none
+
+Creative Commons Attribution-ShareAlike 4.0 International License

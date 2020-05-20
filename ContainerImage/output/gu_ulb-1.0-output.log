@@ -1,0 +1,123 @@
+
+*** SCRIPTURE APP BUILDER ***
+*** 6.2.2 ***
+
+*** Building Android app ***
+
+App Project:  gu_ulb
+App Name:     gu_ulb
+App Version:  1.0
+Package:      org.example.gu_ulb
+Apk Filename: gu_ulb-1.0.apk
+
+Grandroid:    No
+Analytics:    No
+Expiry:       No
+App Builder:  /usr/share/scripture-app-builder
+Audio:        None
+
+*** Setting paths ***
+
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+ANDROID_HOME=/opt/android-sdk-linux
+GRADLE_HOME=/usr/share/scripture-app-builder/tools/gradle
+MAVEN_HOME=/usr/share/scripture-app-builder/tools/maven
+
+PATH=/usr/share/scripture-app-builder/tools/maven/bin:/usr/share/scripture-app-builder/tools/gradle/bin:/opt/android-sdk-linux/tools:/usr/lib/jvm/java-1.8.0-openjdk-amd64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+*** JDK ***
+
+openjdk version "1.8.0_242"
+OpenJDK Runtime Environment (build 1.8.0_242-8u242-b08-0ubuntu3~18.04-b08)
+OpenJDK 64-Bit Server VM (build 25.242-b08, mixed mode)
+
+*** Android SDK ***
+
+Target Android Platform:    Android 9.0 Pie (API 28)
+Minimum Android Platform:   Android 4.0-4.0.2 Ice Cream Sandwich (API 14)
+SDK Tools Version:          26.1.1
+SDK Build Tools Version:    28.0.3
+SDK Platform Tools Version: 29.0.6
+
+*** Compiling apk ***
++ gradle clean assembleRelease
+
+Welcome to Gradle 5.4.1!
+
+Here are the highlights of this release:
+ - Run builds with JDK12
+ - New API for Incremental Tasks
+ - Updates to native projects, including Swift 5 support
+
+For more details see https://docs.gradle.org/5.4.1/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :clean UP-TO-DATE
+> Task :preBuild UP-TO-DATE
+> Task :extractProguardFiles
+> Task :preReleaseBuild
+> Task :compileReleaseAidl NO-SOURCE
+> Task :compileReleaseRenderscript NO-SOURCE
+> Task :checkReleaseManifest
+> Task :generateReleaseBuildConfig
+> Task :prepareLintJar
+> Task :generateReleaseSources
+> Task :javaPreCompileRelease
+> Task :mainApkListPersistenceRelease
+> Task :generateReleaseResValues
+> Task :generateReleaseResources
+> Task :mergeReleaseResources
+> Task :createReleaseCompatibleScreenManifests
+> Task :processReleaseManifest
+> Task :processReleaseResources
+> Task :compileReleaseJavaWithJavac
+> Task :compileReleaseSources
+
+> Task :lintVitalRelease
+Calling mockable JAR artifact transform to create file: /root/.gradle/caches/transforms-2/files-2.1/af7fd3a3adf89297c65e72c9cc382ab5/android.jar with input /opt/android-sdk-linux/platforms/android-28/android.jar
+
+> Task :mergeReleaseShaders
+> Task :compileReleaseShaders
+> Task :generateReleaseAssets
+> Task :mergeReleaseAssets
+> Task :validateSigningRelease
+> Task :signingConfigWriterRelease
+> Task :processReleaseJavaRes NO-SOURCE
+> Task :transformResourcesWithMergeJavaResForRelease
+D8: The rule `-keep public class * extends androidx.versionedparcelable.VersionedParcelable {
+  <init>();
+}` uses extends but actually matches implements.
+
+> Task :transformClassesAndResourcesWithR8ForRelease
+R8 is the new Android code shrinker. If you experience any issues, please file a bug at
+https://issuetracker.google.com, using 'Shrinker (R8)' as component name. You can
+disable R8 by updating gradle.properties with 'android.enableR8=false'.
+Current version is: 1.4.94 (build 390954928f0db9c3b888a367f7f128ce3bbfb160 from go/r8bot (luci-r8-ci-archive-0-5g74)).
+
+
+> Task :mergeReleaseJniLibFolders
+> Task :transformNativeLibsWithMergeJniLibsForRelease
+> Task :packageRelease
+> Task :assembleRelease
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/5.4.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 1m 50s
+25 actionable tasks: 24 executed, 1 up-to-date
+total 20716
+-rw-r--r-- 1 root root 21206269 Mar 26 17:01 a-release.apk
+-rw-r--r-- 1 root root      230 Mar 26 17:01 output.json
+
+Copying apk to output folder
+
+
+
+Signed release apk built successfully.
+
+-rwxrwxrwx 1 android android 21206269 Mar 26  2020 /root/App Builder/Scripture Apps/Apk Output/gu_ulb-1.0.apk
+
+
+Copying log to output folder
+

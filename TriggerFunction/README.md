@@ -1,0 +1,1 @@
+This is an Azure function that triggers pushes a queue item to one queue to trigger the build and another queue to clean up the container and send a text notification to the user. the function.json has the output bindings
