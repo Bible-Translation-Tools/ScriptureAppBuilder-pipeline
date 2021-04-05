@@ -1,4 +1,4 @@
-.PHONY: build-dev run-dev
+.PHONY: build-dev run-dev shell-dev
 
 build-dev:
 	cd ContainerImage \
@@ -17,4 +17,9 @@ run-dev:
 		   en_ulb \
 		   https://content.bibletranslationtools.org/WycliffeAssociates/en_ulb \
 		   debugpass
-			  
+
+shell-dev:
+	cd ContainerImage \
+	&& docker run --interactive --tty \
+	   --entrypoint /bin/bash \
+	   sab-local
