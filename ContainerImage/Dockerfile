@@ -11,6 +11,7 @@ RUN chmod +x /root/sab-build-debug-keystore.sh
 WORKDIR /opt/android-sdk-linux
 RUN /opt/tools/entrypoint.sh built-in
 RUN apt-get update && apt-get install -y \
+    libglib2.0-bin \
     curl \
     gnupg-agent \
     unzip \
