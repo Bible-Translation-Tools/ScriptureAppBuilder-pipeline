@@ -20,7 +20,7 @@ run-dev:
 	       https://content.bibletranslationtools.org/WycliffeAssociates/en_ulb \
 	       debugpass
 
-run-gui-dev:
+gui-dev:
 	TEMP_KEYSTORE_DIR=$$(mktemp -d /tmp/sab-keystore-XXXXXX) \
 	&& cd ContainerImage \
 	&& docker run \
@@ -47,5 +47,6 @@ shell-dev:
 	   --env DISPLAY="$${DISPLAY}" \
 	   --volume="${XAUTHORITY}:/root/.Xauthority:rw" \
 	   --volume $${TEMP_KEYSTORE_DIR}/keystore3.keystore:/root/keystore3.keystore \
+	   --volume /tmp/sab-working:/working \
 	   --entrypoint /bin/bash \
 	   sab-local
