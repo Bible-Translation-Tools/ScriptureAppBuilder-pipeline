@@ -7,7 +7,6 @@ build-dev:
 
 run-dev:
 	# Runs the project headless.  Output should be an Android APK.
-	# TODO: host-mount the output directory so that the user can get the APK
 	TEMP_KEYSTORE_DIR=$$(mktemp -d /tmp/sab-keystore-XXXXXX) \
 	&& APK_OUTPUT_DIR=/tmp/sab-output \
 	&& mkdir -p $${APK_OUTPUT_DIR} \
