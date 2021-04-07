@@ -10,16 +10,19 @@ RUN chmod +x /root/sab-build-debug-keystore.sh
 
 WORKDIR /opt/android-sdk-linux
 RUN /opt/tools/entrypoint.sh built-in
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install -y \
     libglib2.0-bin \
     curl \
     gnupg-agent \
     unzip \
-    software-properties-common && \
-    curl -fsSL http://packages.sil.org/sil.gpg | apt-key add - && \
-    add-apt-repository "deb [arch=amd64] http://packages.sil.org/ubuntu bionic main" && \
-    apt-get update && \
-    apt-get install -y scripture-app-builder && \
-    rm -rf /var/lib/apt/lists/*
+    software-properties-common
+
 WORKDIR /root
+RUN curl -fsSL http://packages.sil.org/sil.gpg | apt-key add - \
+ && add-apt-repository "deb [arch=amd64] http://packages.sil.org/ubuntu bionic main" \
+ && apt-get update \
+ && wget https://packages.sil.org/ubuntu/pool/main/s/scripture-app-builder/scripture-app-builder_6.1%2Bubuntu1%2Bbionic1_amd64.deb \
+ && apt install -y ./scripture-app-builder_6.1+ubuntu1+bionic1_amd64.deb \
+ && rm -rf /var/lib/apt/lists/*
+
 ENTRYPOINT [ "/root/sab-run-build.sh" ]
