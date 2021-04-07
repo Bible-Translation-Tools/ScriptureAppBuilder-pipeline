@@ -1,10 +1,13 @@
 .PHONY: build-dev run-dev shell-dev
 
 build-dev:
+	# Builds the container.
 	cd ContainerImage \
 	&& docker build --tag sab-local .
 
 run-dev:
+	# Runs the project headless.  Output should be an Android APK.
+	# TODO: host-mount the output directory so that the user can get the APK
 	TEMP_KEYSTORE_DIR=$$(mktemp -d /tmp/sab-keystore-XXXXXX) \
 	&& cd ContainerImage \
 	&& docker run \
@@ -21,6 +24,7 @@ run-dev:
 	       debugpass
 
 gui-dev:
+	# Runs the Scripture App Builder GUI
 	TEMP_KEYSTORE_DIR=$$(mktemp -d /tmp/sab-keystore-XXXXXX) \
 	&& cd ContainerImage \
 	&& docker run \
@@ -36,6 +40,8 @@ gui-dev:
 	   sab-local
 
 shell-dev:
+	# Invokes the container and opens a prompt.  
+	# To run the GUI, type 'scripture-app-builder'
 	TEMP_KEYSTORE_DIR=$$(mktemp -d /tmp/sab-keystore-XXXXXX) \
 	&& cd ContainerImage \
 	&& docker run \
