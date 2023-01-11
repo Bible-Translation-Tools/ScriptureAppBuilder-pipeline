@@ -19,11 +19,36 @@ REPO=$1
 REPOURL=$2
 KEYPASS=$3
 
-wget ${REPOURL}/archive/master.zip
+#Repo that contains a BTT-Writer project
+#REPOURL=https://content.bibletranslationtools.org/klero/lno-x-okolie_luk_text_reg
+
+#Repo that contains a collection of USFM
+#REPOURL=https://content.bibletranslationtools.org/WycliffeAssociates/en_ulb
+
+#Try to get the pipeline generated USFM from read.bibletranslationtools.org, if that fails, 
+
+# Set READUSFMURL to the read.bibletranslationtools.org/u/<repo>/source.usfm link
+READUSFMURL=${REPOURL/\/\/content/\/\/read}
+READUSFMURL=${READUSFMURL/.org\//.org/u/}
+READUSFMURL=${READUSFMURL}/source.usfm
+
+# Attempt to download the read.btt.org source.usfm URL
+wget -O source.usfm ${READUSFMURL}
+# If the download failed, download the alternate URL
+if [ $? -ne 0 ]; then 
+  wget -O source.zip ${REPOURL}/archive/master.zip
+  if [ $? -ne 0 ]; then exit 1; fi
+  FILENAME=source.zip
+fi
+if [ -z "$FILENAME" ] && [ -e "source.usfm" ]; then
+  FILENAME=source.usfm
+elif [ -z "$FILENAME" ] && [ ! -e "source.usfm" ]; then
+  exit 1
+fi
 
 /usr/share/scripture-app-builder/sab.sh -new -n "${REPO}" \
     -p org.example.${REPO} \
-    -b master.zip \
+    -b ${FILENAME} \
     -f "/root/fonts/JameelNooriNastaleeq.ttf" \
     -f "/root/fonts/CharisSILCompact-B.ttf" \
     -f "/root/fonts/CharisSILCompact-R.ttf" \
