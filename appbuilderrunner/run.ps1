@@ -13,6 +13,8 @@ $cred = New-Object System.Management.Automation.PSCredential ($env:STORAGENAME, 
 $AppName = $QueueItem.AppName
 $RepoURL = $QueueItem.RepoURL
 $JobId = $QueueItem.JobId
+$IsAbsoluteUrl=$QueueItem.isAbsoluteUrl
+
 
 New-AzContainerGroup `
      -ResourceGroupName dansfunctions `
@@ -23,5 +25,5 @@ New-AzContainerGroup `
      -AzureFileVolumeShareName acishare `
      -AzureFileVolumeAccountCredential $cred `
      -AzureFileVolumeMountPath "/root/App Builder/Scripture Apps/Apk Output" `
-     -Command "/root/sab-run-build.sh $AppName $RepoURL $env:SIGNINGKEYPASS" `
+     -Command "/root/sab-run-build.sh $AppName $RepoURL $env:SIGNINGKEYPASS $IsAbsoluteUrl" `
      -RestartPolicy Never

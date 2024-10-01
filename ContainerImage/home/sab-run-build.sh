@@ -14,12 +14,21 @@ fi
 if [ -z $3 ];
 then echo "\$KEYPASS not set" && exit
 fi
+if [ -z $4 ];
+then echo "\$IS_ABSOLUTE_URL not set" && exit
+fi
+
 
 REPO=$1
 REPOURL=$2
 KEYPASS=$3
+ISABSOLUTEURL=$4
 
+if [ $ISABSOLUTEURL = true ]; then
 wget ${REPOURL}/archive/master.zip
+else
+wget ${REPOURL}
+fi
 
 /usr/share/scripture-app-builder/sab.sh -new -n "${REPO}" \
     -p org.example.${REPO} \
